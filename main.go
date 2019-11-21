@@ -14,15 +14,10 @@ import (
 	stringutils "github.com/alessiosavi/GoGPUtils/string"
 )
 
-func main() {
+func compareBinaryFile(file1, file2 string) int {
 
 	var size1, size2 int64
 	var err, err1, err2 error
-	var file1, file2 string
-
-	log.SetFlags(log.LstdFlags | log.Lmicroseconds | log.Lshortfile)
-
-	file1, file2 = verifyCommandLineInput()
 
 	if !fileutils.FileExists(file1) {
 		log.Fatal("File [", file1, "] does not exist!")
@@ -46,11 +41,12 @@ func main() {
 
 	// Compare file size (disabled)
 
-	// if size1 != size2 {
-	log.Println("Size of ["+file1+"]-> ", size1)
-	log.Println("Size of ["+file2+"]-> ", size2)
-	// 	log.Fatal("Files are not equals! Dimension mismatch!")
-	// }
+	if size1 != size2 {
+		log.Println("Size of ["+file1+"]-> ", size1)
+		log.Println("Size of ["+file2+"]-> ", size2)
+		log.Println("Files are not equals! Dimension mismatch!")
+		return 1
+	}
 
 	// Open first file
 	fdFile1, err := os.Open(file1)
@@ -90,11 +86,24 @@ func main() {
 			var pos1, pos2 int64
 			pos1, _ = fdFile1.Seek(0, 1)
 			pos2, _ = fdFile1.Seek(0, 1)
-			log.Fatal("Files are not equals! At position [Pos1:", pos1, "Pos2:", pos2, "]")
+			log.Println("Files are not equals! At position [Pos1:", pos1, "Pos2:", pos2, "]")
+			return 1
 		}
 	}
 
 	log.Println("Files [", file1, "-", file2, "] are equal!")
+	return 0
+}
+
+func main() {
+
+	log.SetFlags(log.LstdFlags | log.Lmicroseconds | log.Lshortfile)
+
+	var file1, file2 string
+	file1, file2 = verifyCommandLineInput()
+
+	compareBinaryFile(file1, file2)
+
 }
 
 // verifyCommandLineInput verify about the INPUT parameter passed as arg[]
