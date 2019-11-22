@@ -2,6 +2,7 @@ package api
 
 import (
 	"log"
+	"os"
 
 	"github.com/alessiosavi/GoDiffBinary/core"
 	helper "github.com/alessiosavi/GoGPUtils/helper"
@@ -83,6 +84,12 @@ func uploadFasthttp(ctx *fasthttp.RequestCtx, file1, file2 string, size int) {
 		_, err = ctx.WriteString("Files are different\n")
 		core.Check(err, "Writing to stdout result of comparing")
 	}
+
+	err = os.Remove(f1)
+	core.Check(err, "Removing ["+f1+"]")
+
+	err = os.Remove(f2)
+	core.Check(err, "Removing ["+f2+"]")
 }
 
 // FastHomePage is the methods for serve the home page. It print the list of file that you can query with the complete link in order to copy and paste easily

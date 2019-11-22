@@ -25,7 +25,7 @@ func main() {
 		core.CompareBinaryFile(file1, file2, size)
 		return
 	}
-
+	log.Println("Http enabled!")
 	//api.InitAPIGin("localhost", "8080")
 	api.InitAPIFasthttp("localhost", "8080", size)
 }
@@ -40,14 +40,15 @@ func verifyCommandLineInput() (string, string, int, bool) {
 
 	flag.Parse()
 	if *mode {
-		log.Println("Http enabled!")
 		return "", "", *dimension, *mode
 	}
-	log.Println("Going to work in cli mode (use -http true for enable HTTP API")
+	log.Println("Cli mode enabled - Going to work in cli mode (use -http true for enable HTTP API)")
 	if stringutils.IsBlank(*file1) {
+		flag.PrintDefaults()
 		log.Fatal("file1 parameter not passed in input!")
 	}
 	if stringutils.IsBlank(*file2) {
+		flag.PrintDefaults()
 		log.Fatal("file2 parameter not passed in input!")
 	}
 	return *file1, *file2, *dimension, false
