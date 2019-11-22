@@ -10,12 +10,12 @@ import (
 	"log"
 	"os"
 
+	"github.com/alessiosavi/GoDiffBinary/api"
 	fileutils "github.com/alessiosavi/GoGPUtils/files"
 	stringutils "github.com/alessiosavi/GoGPUtils/string"
 )
 
 func compareBinaryFile(file1, file2 string) int {
-
 	var size1, size2 int64
 	var err, err1, err2 error
 
@@ -104,6 +104,8 @@ func main() {
 
 	compareBinaryFile(file1, file2)
 
+	//api.InitAPIGin("localhost", "8080")
+	api.InitAPIFasthttp("localhost", "8080")
 }
 
 // verifyCommandLineInput verify about the INPUT parameter passed as arg[]
