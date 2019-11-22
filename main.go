@@ -6,6 +6,7 @@ package main
 import (
 	"flag"
 	"log"
+	"os"
 
 	"github.com/alessiosavi/GoDiffBinary/api"
 	"github.com/alessiosavi/GoDiffBinary/core"
@@ -35,10 +36,16 @@ func verifyCommandLineInput() (string, string, int, bool) {
 	log.Println("VerifyCommandLineInput | START")
 	file1 := flag.String("file1", "", "File1 to compare")
 	file2 := flag.String("file2", "", "File2 to compare against")
-	dimension := flag.Int("size", 0, "Dimension that have be compared at each iteration")
+	dimension := flag.Int("size", 0, "Dimension that have be compared at each iteration (1k as default)")
 	mode := flag.Bool("http", false, "Mode, if true will spawn http api instead of command line tool")
+	help := flag.Bool("help", false, "Print usage")
 
 	flag.Parse()
+
+	if *help {
+		flag.PrintDefaults()
+		os.Exit(0)
+	}
 	if *mode {
 		return "", "", *dimension, *mode
 	}
