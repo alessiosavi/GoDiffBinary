@@ -7,5 +7,5 @@ require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/gin-gonic/gin v1.6.3
 	github.com/stretchr/testify v1.4.0 // indirect
-	github.com/valyala/fasthttp v1.18.0
+	github.com/valyala/fasthttp v1.22.0
 )
